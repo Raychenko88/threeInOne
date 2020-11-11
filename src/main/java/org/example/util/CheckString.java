@@ -1,6 +1,7 @@
 package org.example.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CheckString {
@@ -31,9 +32,25 @@ public class CheckString {
     }
 
     public static void secondOptiion(String string) {
-        String str = string.replaceAll("Ave." + (","), "Avenue");
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(str);
-        System.out.println(stringBuilder.toString().replaceAll("St.|Str.", "Street"));
+        List toReplaceAvenue = Arrays.asList("Ave.", "Ave", "Ave,", "Ave.,");
+        List toReplaceStreet = Arrays.asList("Str.", "Str", "St.", "St", "St,", "St.,", "Str,", "Str.,");
+
+        StringBuilder result = new StringBuilder();
+        List<String> list = new ArrayList<>();
+        for (String str : string.split(" ")) {
+            list.add(str);
+        }
+        for (int i = 0; i < list.size(); i++) {
+            if (i > 1 && toReplaceAvenue.contains(list.get(i))) {
+                result.append(list.get(i).replace(list.get(i), "Avenue, "));
+            }else if (toReplaceStreet.contains(list.get(i))) {
+
+                result.append(list.get(i).replace(list.get(i), "Street, "));
+
+            }else {
+                result.append(list.get(i) + " ");
+            }
+        }
+        System.out.println(result);
     }
 }
